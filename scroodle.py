@@ -5,8 +5,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 
-import time
-
 DEFAULT_IMPLICIT_WAIT = 10
 
 def get_driver():
