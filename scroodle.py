@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gather scrambles from qqtimer.net."""
+"""Gather scrambles from csTimer.net."""
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
