@@ -3,7 +3,10 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+
+import sys
 
 DEFAULT_IMPLICIT_WAIT = 10
 
@@ -17,11 +20,12 @@ def get_driver():
     driver.get("https://cstimer.net")
 
     # Click on the 'Tools' menu
-    tools_button = driver.find_element_by_xpath("//div[@class='mybutton c6']")
+    tools_button = driver.find_element(By.XPATH, "//div[@class='mybutton c6']")
     tools_button.click()
 
     # Choose ScrambleGenerator
-    tool_select_dropdown = Select(driver.find_element_by_xpath(
+    tool_select_dropdown = Select(driver.find_element(
+            By.XPATH,
             "(//span[text()='Function']/select)[1]"
         )
     )
@@ -32,13 +36,13 @@ def get_driver():
 def get_scrambles(driver, puzzle, option, scramble_count):
     # Select puzzle/contest
     puzzle_selector = Select(
-        driver.find_element_by_xpath("(//div[@class='title']/nobr/select)[1]")
+        driver.find_element(By.XPATH, "(//div[@class='title']/nobr/select)[1]")
     )
     puzzle_selector.select_by_visible_text(puzzle)
 
     # Select sub-option if need be
     option_selector = Select(
-        driver.find_element_by_xpath("(//div[@class='title']/nobr/select)[2]")
+        driver.find_element(By.XPATH, "(//div[@class='title']/nobr/select)[2]")
     )
     option_selector.select_by_visible_text(option)
 
@@ -55,7 +59,8 @@ def get_scrambles(driver, puzzle, option, scramble_count):
     )
 
     # Specify number of scrambles
-    scramble_count_selector = driver.find_element_by_xpath(
+    scramble_count_selector = driver.find_element(
+        By.XPATH,
         "//div[text()='Number of scrambles']/input"
     )
     scramble_count_selector.clear()
@@ -63,16 +68,16 @@ def get_scrambles(driver, puzzle, option, scramble_count):
 
     # Remove the numbering prefix lmao
     prefix_selector = Select(
-        driver.find_element_by_xpath("//div[text()='Number of scrambles']/select")
+        driver.find_element(By.XPATH, "//div[text()='Number of scrambles']/select")
     )
     prefix_selector.select_by_value("")
 
     # Click 'Generate Scrambles!'
-    generate_button = driver.find_element_by_xpath("//span[text()='Generate Scrambles!']")
+    generate_button = driver.find_element(By.XPATH, "//span[text()='Generate Scrambles!']")
     generate_button.click()
 
     # Extract the text
-    text_area = driver.find_element_by_xpath("//textarea[@readonly='']")
+    text_area = driver.find_element(By.XPATH, "//textarea[@readonly='']")
 
     return [line for line in text_area.text.split("\n")]
 
